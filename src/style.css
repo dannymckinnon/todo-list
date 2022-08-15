@@ -9,7 +9,9 @@ body {
 }
 
 .header {
-  background-color: blue;
+  background-color: #333;
+  color: #eee;
+  padding: 1rem;
 }
 
 .content {
@@ -18,16 +20,38 @@ body {
 }
 
 .sidebar {
-  outline: 1px solid red;
+  background-color: #ddd;
+  color: #333;
+}
+
+.sidebar ul {
+  padding: 2rem;
+  width: 200px;
+  list-style: none;
+}
+
+.container {
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  background-color: #eee;
+  color: #333;
+  padding: 3rem;
 }
 
 .todos {
-  outline: 1px solid red;
-  flex-grow: 8;
+  width: 60%;
+}
+
+.card {
+  outline: 1px solid black;
+  margin-bottom: 0.5rem;
 }
 
 .footer {
   margin-top: auto;
-  background-color: blue;
+  background-color: #333;
+  color: #eee;
+  padding: 1rem;
+  text-align: center;
 }
