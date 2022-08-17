@@ -28,28 +28,44 @@ footer {
   text-align: center;
 }
 
-ul {
-  list-style: none;
-  margin: 1rem;
-  padding: 0;
+button {
+  cursor: pointer;
 }
 
-
-
-.sidebar {
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  padding: 3rem;
   background-color: #ddd;
   color: #333;
-  width: 300px;
+}
+
+.menu button,
+.menu h3 {
+  padding: 0.5rem;
+  font-size: 18px;
+}
+
+h3 {
+  margin-bottom: 0;
+}
+
+.menu button {
+  display: flex;
+  margin: 0;
+  background: none;
+  border-style: none;
+  border-radius: 0.5rem;
+}
+
+.menu button:hover {
+  background-color: lightgray;
 }
 
 
 
-.projects h3 {
-  padding-left: 1rem;
-}
-
-
-.container {
+.task-container {
   flex-grow: 1;
   display: flex;
   justify-content: center;
