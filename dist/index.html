@@ -20,26 +20,32 @@
       <button>Upcoming</button>
       <h3>Projects</h3>
       <button>+ Create new project</button>
-      <div class="project-container">
-        <div class="project">
-          <button>Project 1</button>
-          <button>-</button>
-        </div>
-        <div class="project">
-          <button>Project 2</button>
-          <button>-</button>
-        </div>
-        <div class="project">
-          <button>Project 3</button>
-          <button>-</button>
-        </div>
+      <div class="project">
+        <button>Project 1</button>
+        <button>x</button>
+      </div>
+      <div class="project">
+        <button>Project 2</button>
+        <button>x</button>
+      </div>
+      <div class="project">
+        <button>Project 3</button>
+        <button>x</button>
       </div>
     </div>
     <div class="task-container">
       <button>+ Add task</button>
       <div class="task">
-        <input type="checkbox">
-        <button>-</button>
+        <div class="title">
+          <input id="status" type="checkbox">
+          <label for="status">Title</label>
+        </div>
+        <div class="del-edit-date">
+          <input type="date">
+          <button>Edit</button>
+          <button>x</button>
+        </div>
+        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae autem saepe fugit cupiditate itaque ipsum, ex at incidunt perspiciatis, enim explicabo facere odio corrupti nam voluptatum tempora illum aperiam numquam?</p>
       </div>
     </div>
   </main>
@@ -47,7 +53,6 @@
   <footer>
     <h3>ⓒ Danny McKinnon</h3>
   </footer>
-
   
 </body>
 </html>

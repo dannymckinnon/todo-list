@@ -66,19 +66,19 @@ button:hover {
   border-bottom: 1px solid rgb(203, 203, 203);
 }
 
-.project-container button {
-  font-size: 15px;
-}
-
 .project {
   margin-left: 1.5rem;
   display: flex;
-  justify-content: space-between;
 }
 
 .project:hover {
   background-color: lightgray;
   border-radius: 0.6rem;
+}
+
+.project button:first-child {
+  font-size: 15px;
+  flex-grow: 1;
 }
 
 .task-container {
@@ -92,8 +92,29 @@ button:hover {
 }
 
 .task {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   margin: 0.5rem;
-  width: 60%;
+  width: 70%;
 }
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.del-edit-date {
+  display: flex;
+  margin-left: auto;
+}
+
+.description {
+  grid-row-start: 2;
+  margin-left: 27px;
+  font-size: 13px;
+  word-wrap: break-word;
+  min-width: 200px;
+  max-width: 600px;
+}
+
