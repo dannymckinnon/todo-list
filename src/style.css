@@ -42,9 +42,6 @@ button {
   padding: 0.5rem;
 }
 
-button:hover {
-  background-color: lightgray;
-}
 
 .menu {
   display: flex;
@@ -58,6 +55,10 @@ button:hover {
 .menu button,
 .menu h3 {
   font-size: 18px;
+}
+
+.menu button:hover {
+background-color: lightgray;
 }
 
 .menu h3 {
@@ -107,6 +108,15 @@ button:hover {
 .del-edit-date {
   display: flex;
   margin-left: auto;
+}
+
+.del-edit-date img {
+  width: 1.5rem;
+}
+
+.del-edit-date button {
+  padding: 0;
+  margin-left: 20px;
 }
 
 .description {
