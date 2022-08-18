@@ -67,9 +67,20 @@ background-color: lightgray;
   border-bottom: 1px solid rgb(203, 203, 203);
 }
 
+.icon {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
 .project {
   margin-left: 1.5rem;
   display: flex;
+}
+
+.menu button {
+  display: flex;
+  align-items: flex-end;
 }
 
 .project img {
