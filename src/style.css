@@ -37,7 +37,7 @@ button {
   display: flex;
   background: none;
   border-style: none;
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   cursor: pointer;
   padding: 0.5rem;
 }
@@ -57,14 +57,29 @@ button:hover {
 
 .menu button,
 .menu h3 {
-  padding: 0.5rem;
   font-size: 18px;
 }
 
 .menu h3 {
   margin-top: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgb(203, 203, 203);
 }
 
+.projects button {
+  margin-left: 1.5rem;
+  font-size: 15px;
+}
+
+.project {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project:hover {
+  background-color: lightgray;
+  border-radius: 0.6rem;
+}
 
 .task-container {
   flex-grow: 1;
