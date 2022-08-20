@@ -163,3 +163,18 @@ background-color: lightgray;
   
 }
 
+
+.task-modal {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.538);
+  height: 100%;
+  width: 100%;
+}
+
+.task-form {
+  background-color:#ddd;
+  border-radius: 0.8rem;
+  width: 500px;
+  height: 500px;
+  margin: 100px auto;
+}
