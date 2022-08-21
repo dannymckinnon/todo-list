@@ -173,8 +173,8 @@ button {
   flex-direction: column;
   background-color: white;
   border-radius: 0.8rem;
-  width: 300px;
-  height: 400px;
+  width: 375px;
+  height: 475px;
   margin: 100px auto;
 }
 
@@ -203,4 +203,18 @@ button {
   margin: 5px 5px 0 0;
 }
 
+.modal-input {
+  border-style: none;
+  background-color: whitesmoke;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 14px;
+}
 
+.modal-input:focus {
+  outline: none;
+}
+
+#description {
+  resize: none;
+}
