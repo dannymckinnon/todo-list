@@ -54,17 +54,13 @@
   <div class="task-modal">
     <div class="form-container">
       <button class="close-modal"><img src="../src/images/close.svg" alt=""></button>
+      <h1>New Task</h1>
       <form class="task-form" action="">
         <div>
           <label for="title">Title:</label>
           <input type="text" id="title" name="title" placeholder="Enter a task..." autocomplete="off" required>
         </div>
-
-        <div>
-          <label for="description">Description:</label>
-          <textarea name="description" id="description" cols="30" rows="5" placeholder="Briefly describe the task..."></textarea>
-        </div>
-
+        
         <div>
           <label for="due-date">Due date:</label>
           <input id="due-date" type="date" name="due-date">
@@ -78,6 +74,12 @@
             <option value="high">High</option>
           </select>
         </div>
+
+        <div>
+          <label for="description">Description:</label>
+          <textarea name="description" id="description" cols="30" rows="5" placeholder="Briefly describe the task..."></textarea>
+        </div>
+
         <button>+ Add task</button>
       </form>
     </div>

@@ -162,20 +162,24 @@ button {
 
 .task-modal {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.538);
+  background-color: rgba(0, 0, 0, 0.323);
   height: 100%;
   width: 100%;
-  display: none;
+  /* display: none; */
 }
 
 .form-container {
   display: flex;
   flex-direction: column;
-  background-color:#ddd;
+  background-color: white;
   border-radius: 0.8rem;
-  width: 500px;
+  width: 300px;
   height: 400px;
   margin: 100px auto;
+}
+
+.form-container h1 {
+  align-self: center;
 }
 
 .task-form {
@@ -188,7 +192,7 @@ button {
 }
 
 .task-form div {
-  width: 50%;
+  width: 85%;
   display: flex;
   flex-direction: column;
   font-size: 14px;
@@ -198,3 +202,5 @@ button {
   align-self: flex-end;
   margin: 5px 5px 0 0;
 }
+
+
