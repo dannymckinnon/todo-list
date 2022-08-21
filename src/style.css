@@ -153,7 +153,6 @@ button {
   font-weight: lighter;
   min-width: 200px;
   max-width: 400px;
-  
 }
 
 
@@ -176,7 +175,9 @@ button {
 }
 
 .form-container h1 {
-  align-self: center;
+  text-align: center;
+  margin: 0 30px;
+  border-bottom: 1px solid rgb(233, 233, 233);
 }
 
 .task-form {
