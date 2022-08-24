@@ -1,8 +1,9 @@
+import { todoFactory, todoArray, createTodo } from "./appLogic";
 export { setupEventListeners };
 
 
 function setupEventListeners() {
-  let modal = document.querySelector('.task-modal');
+  const modal = document.querySelector('.task-modal');
 
   
   document.querySelector('.btn-new-task').addEventListener('click', () => {
@@ -21,11 +22,16 @@ function setupEventListeners() {
       modal.style.display = 'none';
   });
 
-  document.querySelector('.menu').addEventListener('click', e => {
-    if (e.target.tagName == 'BUTTON') {
-      console.log(e.target);
-      e.target.style.backgroundColor = 'blue';
-    }
-    console.log(e.target);
-  });
+  document.querySelector('form').addEventListener('submit', createTodo(e));
+
+  const jeff = todoFactory('asdfsdf', '3/3/3/3', 'low', 'sdafsadfasdf');
+  todoArray.push(jeff)
+  console.log(todoArray[0].title);
+}
+
+
+
+
+function displayTodo(todoArray) {
+  //logic to display each todoArray in html 
 }
