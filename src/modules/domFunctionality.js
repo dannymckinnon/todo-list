@@ -24,14 +24,16 @@ function setupEventListeners() {
   document.querySelector('.submit-task-btn').addEventListener('click', (e) => {
     modal.style.display = 'none';
     addToArray(e);
+    displayAll(todoArray);
   });
 }
 
 
-function displayAll(todoArray) {
+function displayAll(array) {
   const taskContainer = document.querySelector('.task-container');
-
-  todoArray.forEach(element => {
+  document.querySelectorAll('.task').forEach(element => element.remove());
+  array.forEach(element => {
+    console.log('asdfasdf');
     const taskDiv = createDiv(element);
     taskContainer.appendChild(taskDiv);
   });  
