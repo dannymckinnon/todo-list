@@ -34,20 +34,21 @@ function setupEventListeners() {
 function displayAll(array) {
   const taskContainer = document.querySelector('.task-container');
   document.querySelectorAll('.task').forEach(element => element.remove());
+
   for (let i = 0; i < array.length; i++) {
-    const taskDiv = createDiv(array[i]);
-    taskDiv.setAttribute('data-index', i);
+    const taskDiv = createDiv(array[i], i);
+    // taskDiv.setAttribute('data-index', i);
     taskContainer.appendChild(taskDiv);
   }  
 }
 
 
-function createDiv(obj) {
+function createDiv(obj, index) {
   const taskDiv = elementFromHtml(`
-    <div class="task" style="border-left: 4px solid ${obj.priorityToColor()}">
+    <div class="task" data-index="${index}" style="border-left: 4px solid ${obj.priorityToColor()}">
       <div class="title">
-        <input class="checkboxes" id="status" type="checkbox">
-        <label for="status">${obj.title}</label>
+        <input class="checkboxes" id="status${index}" type="checkbox">
+        <label for="status${index}">${obj.title}</label>
       </div>
       <div class="date">${obj.dueDate}</div>
       <div class="del-edit-task">
