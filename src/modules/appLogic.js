@@ -24,6 +24,8 @@ function addToArray(event) {
 function delFromArray(event) {
   const element = event.target;
   if (element.classList.contains('del-task')) {
-    console.log('sdfasd');
+    const index = element.closest('.task').getAttribute('data-index');
+    todoArray.splice(index, 1);
+    displayAll(todoArray);
   }
 }
