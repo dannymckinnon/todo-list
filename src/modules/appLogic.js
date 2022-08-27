@@ -17,4 +17,3 @@ function addToArray(event) {
 
   todoArray.push(todo);
 }
-
