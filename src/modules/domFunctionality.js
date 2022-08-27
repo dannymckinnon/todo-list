@@ -1,4 +1,4 @@
-import { todoFactory, todoArray, addToArray } from "./appLogic";
+import { todoFactory, todoArray, addToArray, delFromArray } from "./appLogic";
 export { setupEventListeners, displayAll };
 
 
@@ -21,22 +21,24 @@ function setupEventListeners() {
       modal.style.display = 'none';
   });
 
-  document.querySelector('.submit-task-btn').addEventListener('click', (e) => {
+  document.querySelector('.submit-task-btn').addEventListener('click', e => {
     modal.style.display = 'none';
     addToArray(e);
     displayAll(todoArray);
   });
+
+  document.addEventListener('click', delFromArray);
 }
 
 
 function displayAll(array) {
   const taskContainer = document.querySelector('.task-container');
   document.querySelectorAll('.task').forEach(element => element.remove());
-  array.forEach(element => {
-    console.log('asdfasdf');
-    const taskDiv = createDiv(element);
+  for (let i = 0; i < array.length; i++) {
+    const taskDiv = createDiv(array[i]);
+    taskDiv.setAttribute('data-index', i);
     taskContainer.appendChild(taskDiv);
-  });  
+  }  
 }
 
 
@@ -50,25 +52,13 @@ function createDiv(obj) {
       <div class="date">${obj.dueDate}</div>
       <div class="del-edit-task">
         <button type="button"><img src="../src/images/edit.svg" alt="Edit"></button>
-        <button type="button"><img src="../src/images/close.svg" alt="Delete"></button>
+        <button type="button"><img class="del-task" src="../src/images/close.svg" alt="Delete"></button>
       </div>
       <p class="description">${obj.description}</p>
     </div>
   `);
 
   return taskDiv;
-
-  // const task = document.createElement('div').classList.add('task');
-  
-  // const title = document.createElement('div').classList.add('title');
-  // const status = document.createElement('input').setAttribute('id', 'status')
-  //                                               .setAttribute('type', 'checkbox');
-  // const statusLabel = document.createElement('label').setAttribute('for', 'status');
-  // statusLabel.innerHTML = obj.title;
-  // title.append(status, statusLabel);
-
-  // const date = document.createElement('div').classList.add('date')
-  // date.innerHTML = obj.dueDate;
 }
 
 function elementFromHtml(html) {

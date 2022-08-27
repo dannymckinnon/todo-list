@@ -1,6 +1,6 @@
 import { displayAll } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray };
+export { todoFactory, todoArray, addToArray, delFromArray };
 
 const todoArray = [];
 
@@ -18,4 +18,12 @@ function addToArray(event) {
   const todo = todoFactory(title, dueDate, priority, description);
 
   todoArray.push(todo);
+}
+
+
+function delFromArray(event) {
+  const element = event.target;
+  if (element.classList.contains('del-task')) {
+    console.log('sdfasd');
+  }
 }
