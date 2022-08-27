@@ -21,7 +21,10 @@ function setupEventListeners() {
       modal.style.display = 'none';
   });
 
-  document.querySelector('.task-form').addEventListener('submit', addToArray);
+  document.querySelector('.submit-task-btn').addEventListener('click', (e) => {
+    modal.style.display = 'none';
+    addToArray(e);
+  });
 }
 
 

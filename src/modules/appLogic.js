@@ -16,4 +16,5 @@ function addToArray(event) {
   const todo = todoFactory(title, dueDate, priority, description);
 
   todoArray.push(todo);
+  console.log(todoArray.length);
 }
