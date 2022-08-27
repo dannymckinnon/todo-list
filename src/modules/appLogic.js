@@ -5,7 +5,17 @@ export { todoFactory, todoArray, addToArray, delFromArray };
 const todoArray = [];
 
 const todoFactory = (title, dueDate, priority, description) => {
-  return { title, dueDate, priority, description };
+  const priorityToColor = () => {
+    if (priority === 'low') {
+      return '#069C56';
+    } else if (priority === 'medium') {
+      return '#FF980E';
+    } else if (priority === 'high') {
+      return '#D3212C';
+    }
+  };
+
+  return { title, dueDate, priorityToColor, description };
 };
 
 

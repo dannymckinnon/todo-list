@@ -44,9 +44,9 @@ function displayAll(array) {
 
 function createDiv(obj) {
   const taskDiv = elementFromHtml(`
-    <div class="task">
+    <div class="task" style="border-left: 4px solid ${obj.priorityToColor()}">
       <div class="title">
-        <input id="status" type="checkbox">
+        <input class="checkboxes" id="status" type="checkbox">
         <label for="status">${obj.title}</label>
       </div>
       <div class="date">${obj.dueDate}</div>

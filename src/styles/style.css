@@ -104,12 +104,14 @@ button {
   margin-bottom: 1.5rem;
 }
 
+
 .task {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   margin: 0.5rem;
   width: 70%;
-  border-bottom: 1px solid lightgray;
+  padding-left: 0.5rem;
+  border-bottom: 1px dotted lightgray;
 }
 
 .title {
