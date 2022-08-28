@@ -27,9 +27,11 @@ function setupEventListeners() {
     displayTasks(todoArray);
   });
   
-  document.addEventListener('click', e => {
-    delFromArray(e);
-    // make a function to check which button  was last pressed then run the appropriate display function
+  document.addEventListener('click', event => {
+    if (event.target.classList.contains('del-task')) {
+      delFromArray(event);
+      checkSelected(event);
+    }
   });
 
   document.querySelector('.today').addEventListener('click', event => {
@@ -97,3 +99,16 @@ function changeBackgroundColor(event) {
 }
 
 
+function checkSelected(event) {
+  const menuBtn = document.querySelectorAll('.menu-btn');
+  const btnArr = [...menuBtn].filter(element => element.style.backgroundColor === 'rgb(231, 231, 231)');
+  if (btnArr.length === 0) {
+    displayTasks(todoArray);
+  } else if (btnArr[0].classList.contains('today')) {
+    displayToday(todoArray);
+  } else if (btnArr[0].classList.contains('upcoming')) {
+    // displayUpcoming(todoArray);
+  } else if (btnArr[0].classList.contains('all')) {
+    displayTasks(todoArray);
+  }
+}
