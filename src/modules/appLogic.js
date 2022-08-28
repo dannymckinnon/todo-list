@@ -1,4 +1,4 @@
-import { displayAll } from "./domFunctionality";
+import { displayTasks } from "./domFunctionality";
 
 export { todoFactory, todoArray, addToArray, delFromArray };
 
@@ -36,6 +36,6 @@ function delFromArray(event) {
   if (element.classList.contains('del-task')) {
     const index = element.closest('.task').getAttribute('data-index');
     todoArray.splice(index, 1);
-    displayAll(todoArray);
+    displayTasks(todoArray);
   }
 }

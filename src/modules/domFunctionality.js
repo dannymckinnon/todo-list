@@ -1,5 +1,5 @@
 import { todoFactory, todoArray, addToArray, delFromArray } from "./appLogic";
-export { setupEventListeners, displayAll };
+export { setupEventListeners, displayTasks };
 
 
 function setupEventListeners() {
@@ -24,20 +24,35 @@ function setupEventListeners() {
   document.querySelector('.submit-task-btn').addEventListener('click', e => {
     modal.style.display = 'none';
     addToArray(e);
-    displayAll(todoArray);
+    displayTasks(todoArray);
+  });
+  
+  document.addEventListener('click', delFromArray);
+
+  document.querySelector('.today').addEventListener('click', () => {
+    displayToday(todoArray);
   });
 
-  document.addEventListener('click', delFromArray);
+  document.querySelector('.all').addEventListener('click', e => {
+    displayTasks(todoArray);
+  });
 }
 
 
-function displayAll(array) {
+function displayToday(array) {
+  const date = new Date().toLocaleDateString();
+  const result = array.filter(obj => obj.dueDate === date);
+  displayTasks(result);
+}
+
+
+
+function displayTasks(array) {
   const taskContainer = document.querySelector('.task-container');
   document.querySelectorAll('.task').forEach(element => element.remove());
 
   for (let i = 0; i < array.length; i++) {
     const taskDiv = createDiv(array[i], i);
-    // taskDiv.setAttribute('data-index', i);
     taskContainer.appendChild(taskDiv);
   }  
 }
