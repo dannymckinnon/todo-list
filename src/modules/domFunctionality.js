@@ -27,13 +27,18 @@ function setupEventListeners() {
     displayTasks(todoArray);
   });
   
-  document.addEventListener('click', delFromArray);
+  document.addEventListener('click', e => {
+    delFromArray(e);
+    // make a function to check which button  was last pressed then run the appropriate display function
+  });
 
-  document.querySelector('.today').addEventListener('click', () => {
+  document.querySelector('.today').addEventListener('click', event => {
+    changeBackgroundColor(event);
     displayToday(todoArray);
   });
 
-  document.querySelector('.all').addEventListener('click', e => {
+  document.querySelector('.all').addEventListener('click', event => {
+    changeBackgroundColor(event);
     displayTasks(todoArray);
   });
 }
@@ -44,7 +49,6 @@ function displayToday(array) {
   const result = array.filter(obj => obj.dueDate === date);
   displayTasks(result);
 }
-
 
 
 function displayTasks(array) {
@@ -85,5 +89,11 @@ function elementFromHtml(html) {
   return template.content.firstElementChild;
 }
 
+
+function changeBackgroundColor(event) {
+  const menuBtn = document.querySelectorAll('.menu-btn');
+    menuBtn.forEach(element => element.style.backgroundColor = 'transparent');
+    event.target.style.backgroundColor = 'rgb(231, 231, 231)';
+}
 
 
