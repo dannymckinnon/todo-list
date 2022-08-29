@@ -75,6 +75,7 @@ button {
 .menu button {
   display: flex;
   align-items: flex-end;
+  background-color: transparent;
 }
 
 .project img {
@@ -220,6 +221,3 @@ button {
   resize: none;
 }
 
-.selected {
-  background-color: rgb(231, 231, 231);
-}

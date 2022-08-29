@@ -33,16 +33,37 @@ function setupEventListeners() {
       checkSelected(event);
     }
   });
+  
+  // menu button event listeners
+  document.querySelector('.all').addEventListener('click', event => {
+    changeBackgroundColor(event);
+    displayTasks(todoArray);
+  });
 
   document.querySelector('.today').addEventListener('click', event => {
     changeBackgroundColor(event);
     displayToday(todoArray);
   });
 
-  document.querySelector('.all').addEventListener('click', event => {
+  document.querySelector('.upcoming').addEventListener('click', event => {
     changeBackgroundColor(event);
-    displayTasks(todoArray);
+    displayUpcoming(todoArray);
   });
+}
+
+
+function displayTasks(array) {
+  const taskContainer = document.querySelector('.task-container');
+  document.querySelectorAll('.task').forEach(element => element.remove());
+  
+  for (let i = 0; i < todoArray.length; i++) {
+    for (let j = 0; j < array.length; j++) {
+      if (array[i] === array[j]) {
+        const taskDiv = createDiv(array[i], i);
+        taskContainer.appendChild(taskDiv);
+      }
+    }
+  }  
 }
 
 
@@ -53,14 +74,10 @@ function displayToday(array) {
 }
 
 
-function displayTasks(array) {
-  const taskContainer = document.querySelector('.task-container');
-  document.querySelectorAll('.task').forEach(element => element.remove());
-
-  for (let i = 0; i < array.length; i++) {
-    const taskDiv = createDiv(array[i], i);
-    taskContainer.appendChild(taskDiv);
-  }  
+function displayUpcoming(array) {
+  const date = new Date().toLocaleDateString();
+  const result = array.filter(obj => obj.dueDate !== date);
+  displayTasks(result);
 }
 
 
@@ -74,7 +91,7 @@ function createDiv(obj, index) {
       <div class="date">${obj.dueDate}</div>
       <div class="del-edit-task">
         <button type="button"><img src="../src/images/edit.svg" alt="Edit"></button>
-        <button type="button"><img class="del-task" src="../src/images/close.svg" alt="Delete"></button>
+        <button class= "del-task" type="button"><img class="del-task" src="../src/images/close.svg" alt="Delete"></button>
       </div>
       <p class="description">${obj.description}</p>
     </div>
@@ -85,7 +102,6 @@ function createDiv(obj, index) {
 
 function elementFromHtml(html) {
   const template = document.createElement('template');
-
   template.innerHTML = html.trim();
 
   return template.content.firstElementChild;
@@ -101,13 +117,13 @@ function changeBackgroundColor(event) {
 
 function checkSelected(event) {
   const menuBtn = document.querySelectorAll('.menu-btn');
-  const btnArr = [...menuBtn].filter(element => element.style.backgroundColor === 'rgb(231, 231, 231)');
+  const btnArr = [...menuBtn].filter(element => element.style.backgroundColor !== 'transparent');
   if (btnArr.length === 0) {
     displayTasks(todoArray);
   } else if (btnArr[0].classList.contains('today')) {
     displayToday(todoArray);
   } else if (btnArr[0].classList.contains('upcoming')) {
-    // displayUpcoming(todoArray);
+    displayUpcoming(todoArray);
   } else if (btnArr[0].classList.contains('all')) {
     displayTasks(todoArray);
   }

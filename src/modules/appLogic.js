@@ -36,3 +36,5 @@ function delFromArray(event) {
   const index = element.closest('.task').getAttribute('data-index');
   todoArray.splice(index, 1);
 }
+
+
