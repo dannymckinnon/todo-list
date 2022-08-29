@@ -7,10 +7,14 @@ function setupEventListeners() {
   
   document.querySelector('.btn-new-task').addEventListener('click', () => {
     modal.style.display = 'block';
+    const today = new Date().toLocaleDateString();
+    document.querySelector('#due-date').setAttribute('min', today);
+    resetForm();
   });
 
   document.querySelector('.close-modal').addEventListener('click', () => {
     modal.style.display = 'none';
+    resetForm();
   });
 
   document.querySelector('.form-container').addEventListener('click', e => {
@@ -19,15 +23,14 @@ function setupEventListeners() {
 
   modal.addEventListener('click', () => {
       modal.style.display = 'none';
+      resetForm();
   });
 
   document.querySelector('.submit-task-btn').addEventListener('click', e => {
     modal.style.display = 'none';
     addToArray(e);
     displayTasks(todoArray);
-    const inputs = document.querySelectorAll('.modal-input');
-    inputs.forEach(element => element.value = '');
-    document.querySelector('#priority').selectedIndex = 0;
+    resetForm();
   });
   
   document.addEventListener('click', event => {
@@ -130,4 +133,10 @@ function checkSelected(event) {
   } else if (btnArr[0].classList.contains('all')) {
     displayTasks(todoArray);
   }
+}
+
+function resetForm() {
+  const inputs = document.querySelectorAll('.modal-input');
+  inputs.forEach(element => element.value = '');
+  document.querySelector('#priority').selectedIndex = 0;
 }
