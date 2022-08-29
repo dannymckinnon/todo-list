@@ -25,6 +25,9 @@ function setupEventListeners() {
     modal.style.display = 'none';
     addToArray(e);
     displayTasks(todoArray);
+    const inputs = document.querySelectorAll('.modal-input');
+    inputs.forEach(element => element.value = '');
+    document.querySelector('#priority').selectedIndex = 0;
   });
   
   document.addEventListener('click', event => {
