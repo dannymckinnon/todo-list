@@ -34,6 +34,7 @@ function addToArray(event) {
 function delFromArray(event) {
   const element = event.target;
   const index = element.closest('.task').getAttribute('data-index');
+  console.log(index);
   todoArray.splice(index, 1);
 }
 

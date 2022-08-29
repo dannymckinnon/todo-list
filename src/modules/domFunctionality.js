@@ -58,8 +58,8 @@ function displayTasks(array) {
   
   for (let i = 0; i < todoArray.length; i++) {
     for (let j = 0; j < array.length; j++) {
-      if (array[i] === array[j]) {
-        const taskDiv = createDiv(array[i], i);
+      if (array[j] === todoArray[i]) {
+        const taskDiv = createDiv(array[j], i);
         taskContainer.appendChild(taskDiv);
       }
     }
