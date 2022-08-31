@@ -4,7 +4,8 @@ export { todoFactory, todoArray, addToArray, delFromArray };
 
 const todoArray = [];
 
-const todoFactory = (title, dueDate, priority, description) => {
+const todoFactory = (title, dueDate, priority, description,) => {
+  let complete = false; 
   const priorityToColor = () => {
     if (priority === 'low') {
       return '#069C56';
@@ -15,7 +16,7 @@ const todoFactory = (title, dueDate, priority, description) => {
     }
   };
 
-  return { title, dueDate, priorityToColor, description };
+  return { title, dueDate, priorityToColor, description, complete };
 };
 
 

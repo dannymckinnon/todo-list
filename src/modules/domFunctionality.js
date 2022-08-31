@@ -58,10 +58,14 @@ function setupEventListeners() {
 
   document.addEventListener('change', event => {
     if (event.target.getAttribute('type') === 'checkbox') {
+      const task = event.target.closest('.task');
+      const index = task.getAttribute('data-index');
       if (event.target.checked) {
-        event.target.closest('.task').classList.add('task-complete');
+        task.classList.add('task-complete');
+        todoArray[index].complete = true;
       } else {
-        event.target.closest('.task').classList.remove('task-complete');
+        task.classList.remove('task-complete');
+        todoArray[index].complete = false;
       }
     }
   });
@@ -98,10 +102,12 @@ function displayUpcoming(array) {
 
 
 function createDiv(obj, index) {
+  const complete = obj.complete ? 'checked' : 'unchecked';
+  const checkboxClass = obj.complete ? 'task-complete' : '';
   const taskDiv = elementFromHtml(`
-    <div class="task" data-index="${index}" style="border-left: 4px solid ${obj.priorityToColor()}">
+    <div class="task ${checkboxClass}" data-index="${index}" style="border-left: 4px solid ${obj.priorityToColor()}">
       <div class="title">
-        <input id="status${index}" type="checkbox">
+        <input id="status${index}" type="checkbox" ${complete}>
         <label for="status${index}">${obj.title}</label>
       </div>
       <div class="date">${obj.dueDate}</div>

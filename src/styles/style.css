@@ -226,8 +226,3 @@ button {
   color: rgb(174, 174, 174);
 }
 
-.task-complete * {
-  /* color: inherit !important; */
-  /* border: inherit !important; */
-}
-
