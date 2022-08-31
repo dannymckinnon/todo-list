@@ -55,6 +55,16 @@ function setupEventListeners() {
     changeBackgroundColor(event);
     displayUpcoming(todoArray);
   });
+
+  document.addEventListener('change', event => {
+    if (event.target.getAttribute('type') === 'checkbox') {
+      if (event.target.checked) {
+        event.target.closest('.task').classList.add('task-complete');
+      } else {
+        event.target.closest('.task').classList.remove('task-complete');
+      }
+    }
+  });
 }
 
 
@@ -91,7 +101,7 @@ function createDiv(obj, index) {
   const taskDiv = elementFromHtml(`
     <div class="task" data-index="${index}" style="border-left: 4px solid ${obj.priorityToColor()}">
       <div class="title">
-        <input class="checkboxes" id="status${index}" type="checkbox">
+        <input id="status${index}" type="checkbox">
         <label for="status${index}">${obj.title}</label>
       </div>
       <div class="date">${obj.dueDate}</div>

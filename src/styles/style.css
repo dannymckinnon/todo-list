@@ -221,3 +221,13 @@ button {
   resize: none;
 }
 
+.task-complete {
+  text-decoration: line-through;
+  color: rgb(174, 174, 174);
+}
+
+.task-complete * {
+  /* color: inherit !important; */
+  /* border: inherit !important; */
+}
+
