@@ -1,4 +1,4 @@
-import { todoFactory, todoArray, addToArray, delFromArray } from "./appLogic";
+import { todoFactory, todoArray, addToArray, delFromArray, editForm } from "./appLogic";
 export { setupEventListeners, displayTasks };
 
 
@@ -38,6 +38,8 @@ function setupEventListeners() {
     if (event.target.classList.contains('del-task')) {
       delFromArray(event);
       checkSelected(event);
+    } else if (event.target.classList.contains('edit-task')) {
+      editForm(event);
     }
   });
   
@@ -113,8 +115,8 @@ function createDiv(obj, index) {
       </div>
       <div class="date">${obj.dueDate}</div>
       <div class="del-edit-task">
-        <button type="button"><img src="../src/images/edit.svg" alt="Edit"></button>
-        <button class= "del-task" type="button"><img class="del-task" src="../src/images/close.svg" alt="Delete"></button>
+        <button class="edit-task" type="button"><img class="edit-task" src="../src/images/edit.svg" alt="Edit"></button>
+        <button class="del-task" type="button"><img class="del-task" src="../src/images/close.svg" alt="Delete"></button>
       </div>
       <p class="description">${obj.description}</p>
     </div>
