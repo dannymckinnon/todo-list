@@ -8,7 +8,8 @@ function setupEventListeners() {
   document.querySelector('.btn-new-task').addEventListener('click', () => {
     modal.style.display = 'block';
     const today = new Date().toLocaleDateString();
-    document.querySelector('#due-date').setAttribute('min', today);
+    const datePicker = document.querySelector('#due-date');
+    datePicker.setAttribute('min', today);
     resetForm();
   });
 
@@ -155,4 +156,7 @@ function resetForm() {
   const inputs = document.querySelectorAll('.modal-input');
   inputs.forEach(element => element.value = '');
   document.querySelector('#priority').selectedIndex = 0;
+  const today = new Date().toLocaleDateString();
+  const datePicker = document.querySelector('#due-date');
+  datePicker.value = today;
 }
