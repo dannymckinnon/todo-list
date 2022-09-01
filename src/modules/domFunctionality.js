@@ -1,4 +1,4 @@
-import { todoFactory, todoArray, addToArray, delFromArray, editForm } from "./appLogic";
+import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit } from "./appLogic";
 export { setupEventListeners, displayTasks };
 
 
@@ -10,7 +10,7 @@ function setupEventListeners() {
     document.querySelector('.form-title').innerHTML = 'New Task';
     const submitTaskBtn = document.querySelector('.submit-task-btn');
     submitTaskBtn.innerHTML = '+ Add Task';
-    submitTaskBtn.classList.remove('edit-task');
+    submitTaskBtn.classList.remove('submit-edit-task');
     const today = new Date().toLocaleDateString();
     const datePicker = document.querySelector('#due-date');
     datePicker.setAttribute('min', today);
@@ -22,8 +22,8 @@ function setupEventListeners() {
     resetForm();
   });
 
-  document.querySelector('.form-container').addEventListener('click', e => {
-    e.stopPropagation();
+  document.querySelector('.form-container').addEventListener('click', event => {
+    event.stopPropagation();
   });
 
   modal.addEventListener('click', () => {
@@ -31,11 +31,16 @@ function setupEventListeners() {
       resetForm();
   });
 
-  document.querySelector('.submit-task-btn').addEventListener('click', e => {
-    modal.style.display = 'none';
-    addToArray(e);
-    displayTasks(todoArray);
-    resetForm();
+  document.querySelector('.submit-task-btn').addEventListener('click', event => {
+    if (event.target.classList.contains('submit-edit-task')) {
+      submitTodoEdit(event);
+      displayTasks(todoArray);
+    } else {
+      modal.style.display = 'none';
+      addToArray(event);
+      displayTasks(todoArray);
+      resetForm();
+    }
   });
   
   document.addEventListener('click', event => {

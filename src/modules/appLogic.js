@@ -1,6 +1,6 @@
 import { displayTasks } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray, delFromArray, editForm};
+export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit };
 
 const todoArray = [];
 
@@ -64,9 +64,25 @@ function editForm(event) {
 
   const submitBtn = document.querySelector('.submit-task-btn');
   submitBtn.innerHTML = '+ Edit task'
-  submitBtn.classList.add('edit-task');
+  submitBtn.classList.add('submit-edit-task');
   submitBtn.setAttribute('data-index', index);
 
   document.querySelector('.form-title').innerHTML = 'Edit Task';
+}
 
+
+function submitTodoEdit(event) {
+  const index = event.target.getAttribute('data-index');
+  const title = document.querySelector('#title');
+  const priority = document.querySelector('#priority');
+  const dueDate = document.querySelector('#due-date');
+  const description = document.querySelector('#description');
+
+  todoArray[index].title = title.value;
+  todoArray[index].priority = priority.value;
+  todoArray[index].dueDate = dueDate.value;
+  todoArray[index].description = description.value;
+
+  event.target.classList.remove('submit-edit-task');
+  document.querySelector('.task-modal').style.display = 'none';
 }
