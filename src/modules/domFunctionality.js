@@ -7,6 +7,10 @@ function setupEventListeners() {
   
   document.querySelector('.btn-new-task').addEventListener('click', () => {
     modal.style.display = 'block';
+    document.querySelector('.form-title').innerHTML = 'New Task';
+    const submitTaskBtn = document.querySelector('.submit-task-btn');
+    submitTaskBtn.innerHTML = '+ Add Task';
+    submitTaskBtn.classList.remove('edit-task');
     const today = new Date().toLocaleDateString();
     const datePicker = document.querySelector('#due-date');
     datePicker.setAttribute('min', today);
