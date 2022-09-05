@@ -1,10 +1,11 @@
 import { displayTasks } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit };
+export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray };
 
 const todoArray = [];
+const projectArray = [];
 
-const todoFactory = (title, dueDate, priority, description,) => {
+const todoFactory = (title, dueDate, priority, description) => {
   let complete = false; 
   const priorityToColor = () => {
     if (priority === 'low') {
@@ -17,6 +18,13 @@ const todoFactory = (title, dueDate, priority, description,) => {
   };
 
   return { title, dueDate, priorityToColor, description, complete, priority };
+};
+
+
+const projectFactory = (title) => {
+  const todoArray = [];
+
+  return { title, todoArray};
 };
 
 
@@ -85,4 +93,10 @@ function submitTodoEdit(event) {
 
   event.target.classList.remove('submit-edit-task');
   document.querySelector('.task-modal').style.display = 'none';
+}
+
+
+function addToProjectArray(title) {
+  projectArray.push(projectFactory(title));
+  console.log(projectArray);
 }

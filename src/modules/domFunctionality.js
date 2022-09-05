@@ -1,4 +1,4 @@
-import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit } from "./appLogic";
+import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray } from "./appLogic";
 export { setupEventListeners, displayTasks };
 
 
@@ -93,7 +93,9 @@ function setupEventListeners() {
   });
 
   document.querySelector('.submit-project-btn').addEventListener('click', e => {
-    document.querySelector('.menu').appendChild(createProject(e));
+    const title = document.querySelector('.project-input').value;
+    addToProjectArray(title);
+    displayProjects(projectArray);
     projectInputDisplay();
   });
 
@@ -201,14 +203,16 @@ function projectInputDisplay() {
   inputDisplay.firstElementChild.value = '';
 }
 
-function createProject(event) {
-  const title = document.querySelector('.project-input');
-  const taskDiv = elementFromHtml(`
-  <div class="project">
-    <button type="button">${title.value}</button>
-    <button type="button" class="del-project"><img class="del-project" src="../src/images/close.svg" alt="Delete"></button>
-  </div>
-  `);
+function displayProjects(array) {
+  document.querySelectorAll('.project').forEach(project => project.remove());
+  for (let i = 0; i < array.length; i++) {
+    const taskDiv = elementFromHtml(`
+    <div class="project" data-index="${i}">
+      <button type="button">${array[i].title}</button>
+      <button type="button" class="del-project"><img class="del-project" src="../src/images/close.svg" alt="Delete"></button>
+    </div>
+    `);
 
-  return taskDiv;
+    document.querySelector('.menu').appendChild(taskDiv);
+  }
 }
