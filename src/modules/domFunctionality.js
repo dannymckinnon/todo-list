@@ -81,6 +81,11 @@ function setupEventListeners() {
       }
     }
   });
+
+  document.querySelector('.btn-create-project').addEventListener('click', () => {
+    const inputDisplay = document.querySelector('.create-proj-input');
+    inputDisplay.style.display === 'none' ? inputDisplay.style.display = 'flex' : inputDisplay.style.display = 'none';
+  });
 }
 
 
@@ -173,5 +178,5 @@ function resetForm() {
 }
 
 function createProject() {
-  
+
 }
