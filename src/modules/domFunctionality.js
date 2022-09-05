@@ -2,6 +2,8 @@ import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoE
 export { setupEventListeners, displayTasks };
 
 
+
+
 function setupEventListeners() {
   const modal = document.querySelector('.task-modal');
   
@@ -68,6 +70,7 @@ function setupEventListeners() {
     displayUpcoming(todoArray);
   });
 
+  // checkbox event listener
   document.addEventListener('change', event => {
     if (event.target.getAttribute('type') === 'checkbox') {
       const task = event.target.closest('.task');
@@ -82,11 +85,18 @@ function setupEventListeners() {
     }
   });
 
-  document.querySelector('.btn-create-project').addEventListener('click', () => {
-    const inputDisplay = document.querySelector('.create-proj-input');
-    inputDisplay.style.display === 'none' ? inputDisplay.style.display = 'flex' : inputDisplay.style.display = 'none';
+  // projects event listeners
+  document.querySelector('.btn-create-project').addEventListener('click', projectInputDisplay);
+
+  document.querySelector('.submit-project-btn').addEventListener('click', () => {
+    projectInputDisplay();
+  });
+
+  document.querySelector('.close-proj-input').addEventListener('click', () => {
+    projectInputDisplay();
   });
 }
+
 
 
 function displayTasks(array) {
@@ -177,6 +187,7 @@ function resetForm() {
   datePicker.value = today;
 }
 
-function createProject() {
-
+function projectInputDisplay() {
+  const inputDisplay = document.querySelector('.create-proj-input');
+  inputDisplay.style.display === 'none' ? inputDisplay.style.display = 'flex' : inputDisplay.style.display = 'none';
 }
