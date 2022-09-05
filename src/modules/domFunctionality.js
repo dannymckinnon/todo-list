@@ -87,14 +87,16 @@ function setupEventListeners() {
 
   // projects event listeners
   document.querySelector('.btn-create-project').addEventListener('click', projectInputDisplay);
-
-  document.querySelector('.submit-project-btn').addEventListener('click', () => {
-    projectInputDisplay();
-  });
-
+  
   document.querySelector('.close-proj-input').addEventListener('click', () => {
     projectInputDisplay();
   });
+
+  document.querySelector('.submit-project-btn').addEventListener('click', e => {
+    document.querySelector('.menu').appendChild(createProject(e));
+    projectInputDisplay();
+  });
+  
 }
 
 
@@ -190,4 +192,17 @@ function resetForm() {
 function projectInputDisplay() {
   const inputDisplay = document.querySelector('.create-proj-input');
   inputDisplay.style.display === 'none' ? inputDisplay.style.display = 'flex' : inputDisplay.style.display = 'none';
+  inputDisplay.firstElementChild.value = '';
+}
+
+function createProject(event) {
+  const title = document.querySelector('.project-input');
+  const taskDiv = elementFromHtml(`
+  <div class="project">
+    <button type="button">${title.value}</button>
+    <button type="button" class="del-project"><img src="../src/images/close.svg" alt="Delete"></button>
+  </div>
+  `);
+
+  return taskDiv;
 }
