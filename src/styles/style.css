@@ -68,8 +68,8 @@ button {
 }
 
 .project {
-  margin-left: 1.5rem;
   display: flex;
+  margin: 0.3rem 1.5rem;
 }
 
 .menu button {
@@ -236,7 +236,7 @@ button {
 }
 
 .create-proj-input {
-  margin: 0.4rem 0;
+  margin: 0.3rem 1.5rem;
   justify-content: space-between;
   align-items: center;
   height: 1.5rem;

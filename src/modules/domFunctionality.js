@@ -96,6 +96,12 @@ function setupEventListeners() {
     document.querySelector('.menu').appendChild(createProject(e));
     projectInputDisplay();
   });
+
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('del-project')) {
+      e.target.closest('.project').remove();
+    }
+  });
   
 }
 
@@ -200,7 +206,7 @@ function createProject(event) {
   const taskDiv = elementFromHtml(`
   <div class="project">
     <button type="button">${title.value}</button>
-    <button type="button" class="del-project"><img src="../src/images/close.svg" alt="Delete"></button>
+    <button type="button" class="del-project"><img class="del-project" src="../src/images/close.svg" alt="Delete"></button>
   </div>
   `);
 
