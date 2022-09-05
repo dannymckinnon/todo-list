@@ -171,3 +171,7 @@ function resetForm() {
   const datePicker = document.querySelector('#due-date');
   datePicker.value = today;
 }
+
+function createProject() {
+  
+}

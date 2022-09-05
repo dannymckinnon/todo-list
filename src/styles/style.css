@@ -205,7 +205,8 @@ button {
   margin: 5px 5px 0 0;
 }
 
-.modal-input {
+.modal-input,
+.create-proj-input input {
   border-style: none;
   background-color: #f2f2f2f2;
   border-radius: 0.5rem;
@@ -213,7 +214,15 @@ button {
   font-size: 14px;
 }
 
-.modal-input:focus {
+.create-proj-input input {
+  background-color: white;
+  border: 1px solid rgb(214, 214, 214);
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+}
+
+.modal-input:focus,
+.create-proj-input input:focus {
   outline: none;
 }
 
@@ -226,3 +235,23 @@ button {
   color: rgb(174, 174, 174);
 }
 
+.create-proj-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 1.5rem;
+  margin-left: 1.8rem;
+}
+
+.create-proj-btns {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 0.8rem;
+  width: 0.8rem;
+}
+
+.create-proj-btns img {
+  height: 0.8rem;
+  width: 0.8rem;
+}
