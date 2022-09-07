@@ -6,11 +6,12 @@ export { setupEventListeners, displayTasks };
 
 function setupEventListeners() {
   const modal = document.querySelector('.task-modal');
+  const submitTaskBtn = document.querySelector('.submit-task-btn');
   
   document.querySelector('.btn-new-task').addEventListener('click', () => {
     modal.style.display = 'block';
+
     document.querySelector('.form-title').innerHTML = 'New Task';
-    const submitTaskBtn = document.querySelector('.submit-task-btn');
     submitTaskBtn.innerHTML = '+ Add Task';
     submitTaskBtn.classList.remove('submit-edit-task');
     const today = new Date().toLocaleDateString();
@@ -33,7 +34,7 @@ function setupEventListeners() {
       resetForm();
   });
 
-  document.querySelector('.submit-task-btn').addEventListener('click', event => {
+  submitTaskBtn.addEventListener('click', event => {
     if (event.target.classList.contains('submit-edit-task')) {
       submitTodoEdit(event);
       displayTasks(todoArray);
@@ -54,21 +55,20 @@ function setupEventListeners() {
     }
   });
   
-  // menu button event listeners
-  document.querySelector('.all').addEventListener('click', event => {
-    changeBackgroundColor(event.target);
-    displayTasks(todoArray);
-  });
 
-  document.querySelector('.today').addEventListener('click', event => {
-    changeBackgroundColor(event.target);
-    displayToday(todoArray);
-  });
-
-  document.querySelector('.upcoming').addEventListener('click', event => {
-    changeBackgroundColor(event.target);
-    displayUpcoming(todoArray);
-  });
+  document.querySelectorAll('.menu-btn').forEach(item => {
+    item.addEventListener('click', e => {
+      if (e.target.classList.contains('all')) {
+        displayTasks(todoArray);
+      } else if (e.target.classList.contains('today')) {
+        displayToday(todoArray);
+      } else if (e.target.classList.contains('upcoming')) {
+        displayUpcoming(todoArray);
+      }
+      changeBackgroundColor(e.target);
+      submitTaskBtn.classList.remove('submit-proj-btn');
+    });
+  })
 
   // checkbox event listener
   document.addEventListener('change', event => {
@@ -107,7 +107,8 @@ function setupEventListeners() {
     } else if (e.target.classList.contains('project-btn')) {
       changeBackgroundColor(e.target.closest('.project'));
       const index = e.target.closest('.project').getAttribute('data-index');
-      displayTasks(projectArray[index].todoArray); 
+      displayTasks(projectArray[index].todoArray);
+      submitTaskBtn.classList.add('submit-proj-btn'); 
     }
   });
 }
