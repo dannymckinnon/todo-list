@@ -106,9 +106,10 @@ function setupEventListeners() {
       displayProjects(projectArray);
     } else if (e.target.classList.contains('project-btn')) {
       changeBackgroundColor(e.target.closest('.project'));
+      const index = e.target.closest('.project').getAttribute('data-index');
+      displayTasks(projectArray[index].todoArray); 
     }
   });
-
 }
 
 
