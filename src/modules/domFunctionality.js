@@ -1,4 +1,4 @@
-import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray } from "./appLogic";
+import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject } from "./appLogic";
 export { setupEventListeners, displayTasks };
 
 
@@ -56,17 +56,17 @@ function setupEventListeners() {
   
   // menu button event listeners
   document.querySelector('.all').addEventListener('click', event => {
-    changeBackgroundColor(event);
+    changeBackgroundColor(event.target);
     displayTasks(todoArray);
   });
 
   document.querySelector('.today').addEventListener('click', event => {
-    changeBackgroundColor(event);
+    changeBackgroundColor(event.target);
     displayToday(todoArray);
   });
 
   document.querySelector('.upcoming').addEventListener('click', event => {
-    changeBackgroundColor(event);
+    changeBackgroundColor(event.target);
     displayUpcoming(todoArray);
   });
 
@@ -101,10 +101,14 @@ function setupEventListeners() {
 
   document.addEventListener('click', e => {
     if (e.target.classList.contains('del-project')) {
+      removeProject(e);
       e.target.closest('.project').remove();
+      displayProjects(projectArray);
+    } else if (e.target.classList.contains('project-btn')) {
+      changeBackgroundColor(e.target.closest('.project'));
     }
   });
-  
+
 }
 
 
@@ -167,10 +171,10 @@ function elementFromHtml(html) {
 }
 
 
-function changeBackgroundColor(event) {
+function changeBackgroundColor(element) {
   const menuBtn = document.querySelectorAll('.menu-btn');
     menuBtn.forEach(element => element.style.backgroundColor = 'transparent');
-    event.target.style.backgroundColor = 'rgb(231, 231, 231)';
+    element.style.backgroundColor = 'rgb(231, 231, 231)';
 }
 
 
@@ -207,8 +211,8 @@ function displayProjects(array) {
   document.querySelectorAll('.project').forEach(project => project.remove());
   for (let i = 0; i < array.length; i++) {
     const taskDiv = elementFromHtml(`
-    <div class="project" data-index="${i}">
-      <button type="button">${array[i].title}</button>
+    <div class="project menu-btn" data-index="${i}">
+      <button class="project-btn" type="button">${array[i].title}</button>
       <button type="button" class="del-project"><img class="del-project" src="../src/images/close.svg" alt="Delete"></button>
     </div>
     `);

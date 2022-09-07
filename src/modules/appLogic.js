@@ -1,6 +1,6 @@
 import { displayTasks } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray };
+export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject };
 
 const todoArray = [];
 const projectArray = [];
@@ -96,7 +96,12 @@ function submitTodoEdit(event) {
 }
 
 
+// Project functions
 function addToProjectArray(title) {
   projectArray.push(projectFactory(title));
-  console.log(projectArray);
+}
+
+function removeProject(event) {
+  const index = event.target.getAttribute('data-index');
+  projectArray.splice(index, 1);
 }
