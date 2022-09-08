@@ -2,7 +2,7 @@ import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoE
 export { setupEventListeners, displayTasks };
 
 
-
+const today = new Date().toLocaleDateString();
 
 function setupEventListeners() {
   const modal = document.querySelector('.task-modal');
@@ -14,7 +14,6 @@ function setupEventListeners() {
     document.querySelector('.form-title').innerHTML = 'New Task';
     submitTaskBtn.innerHTML = '+ Add Task';
     submitTaskBtn.classList.remove('submit-edit-task');
-    const today = new Date().toLocaleDateString();
     const datePicker = document.querySelector('#due-date');
     datePicker.setAttribute('min', today);
     resetForm();
@@ -38,9 +37,15 @@ function setupEventListeners() {
     if (e.target.classList.contains('submit-edit-task')) {
       submitTodoEdit(e);
       displayTasks(todoArray);
+    } else if (e.target.classList.contains('submit-proj-btn')) {
+      const index = submitTaskBtn.getAttribute('data-index');
+      addToArray(projectArray[index].todoArray);
+      displayTasks(projectArray[index].todoArray);
+      resetForm();
+      modal.style.display = 'none';
     } else {
       modal.style.display = 'none';
-      addToArray(e);
+      addToArray();
       displayTasks(todoArray);
       resetForm();
     }
@@ -61,9 +66,11 @@ function setupEventListeners() {
       if (e.target.classList.contains('all')) {
         displayTasks(todoArray);
       } else if (e.target.classList.contains('today')) {
-        displayToday(todoArray);
+        const result = todoArray.filter(obj => obj.dueDate === today);
+        displayTasks(result);
       } else if (e.target.classList.contains('upcoming')) {
-        displayUpcoming(todoArray);
+        const result = todoArray.filter(obj => obj.dueDate !== today);
+        displayTasks(result);
       }
       changeBackgroundColor(e.target);
       submitTaskBtn.classList.remove('submit-proj-btn');
@@ -108,46 +115,55 @@ function setupEventListeners() {
       changeBackgroundColor(e.target.closest('.project'));
       const index = e.target.closest('.project').getAttribute('data-index');
       displayTasks(projectArray[index].todoArray);
-      submitTaskBtn.classList.add('submit-proj-btn'); 
+      submitTaskBtn.classList.add('submit-proj-btn');
+      submitTaskBtn.setAttribute('data-index', index); 
     }
   });
 }
 
 
-
 function displayTasks(array) {
   const taskContainer = document.querySelector('.task-container');
   document.querySelectorAll('.task').forEach(element => element.remove());
-  
-  for (let i = 0; i < todoArray.length; i++) {
-    for (let j = 0; j < array.length; j++) {
-      if (array[j] === todoArray[i]) {
-        const taskDiv = createDiv(array[j], i);
-        taskContainer.appendChild(taskDiv);
-      }
-    }
+  for (let i = 0; i < array.length; i++) {
+    const taskDiv = createDiv(array[i], i);
+    taskContainer.appendChild(taskDiv);
   }  
 }
 
+// not sure why need a nested a loop, keeping just in case
 
-function displayToday(array) {
-  const date = new Date().toLocaleDateString();
-  const result = array.filter(obj => obj.dueDate === date);
-  displayTasks(result);
-}
+// function displayTasks(array) {
+//   const taskContainer = document.querySelector('.task-container');
+//   document.querySelectorAll('.task').forEach(element => element.remove());
+//   for (let i = 0; i < todoArray.length; i++) {
+//     for (let j = 0; j < array.length; j++) {
+//       if (array[j] === todoArray[i]) {
+//         const taskDiv = createDiv(array[j], i);
+//         taskContainer.appendChild(taskDiv);
+//       }
+//     }
+//   }  
+// }
 
 
-function displayUpcoming(array) {
-  const date = new Date().toLocaleDateString();
-  const result = array.filter(obj => obj.dueDate !== date);
-  displayTasks(result);
-}
+// function displayToday(array) {
+//   const date = new Date().toLocaleDateString();
+//   const result = array.filter(obj => obj.dueDate === date);
+//   displayTasks(result);
+// }
+
+
+// function displayUpcoming(array) {
+//   const date = new Date().toLocaleDateString();
+//   const result = array.filter(obj => obj.dueDate !== date);
+//   displayTasks(result);
+// }
 
 
 function createDiv(obj, index) {
   const complete = obj.complete ? 'checked' : 'unchecked';
   const checkboxClass = obj.complete ? 'task-complete' : '';
-  console.log(obj.priorityToColor(obj.priority));
   const taskDiv = elementFromHtml(`
     <div class="task ${checkboxClass}" data-index="${index}" style="border-left: 4px solid ${obj.priorityToColor(obj.priority)}">
       <div class="title">
