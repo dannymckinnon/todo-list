@@ -2,12 +2,49 @@ import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoE
 export { setupEventListeners, displayTasks };
 
 
-const today = new Date().toLocaleDateString();
+const todaysDate = new Date().toLocaleDateString();
 
 function setupEventListeners() {
   const modal = document.querySelector('.task-modal');
   const submitTaskBtn = document.querySelector('.submit-task-btn');
   
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('del-project')) {
+      removeProject(e);
+      e.target.closest('.project').remove();
+      displayProjects(projectArray);
+
+    } else if (e.target.classList.contains('project-btn')) {
+      changeBackgroundColor(e.target.closest('.project'));
+      const index = e.target.closest('.project').getAttribute('data-index');
+      displayTasks(projectArray[index].todoArray);
+      submitTaskBtn.classList.add('submit-proj-btn');
+      submitTaskBtn.setAttribute('data-index', index); 
+
+    } else if (e.target.classList.contains('del-task')) {
+      delFromArray(e);
+      checkSelected();
+
+    } else if (e.target.classList.contains('edit-task')) {
+      editForm(e);
+    }
+  });
+
+  // checkbox event listener
+  document.addEventListener('change', e => {
+    if (e.target.getAttribute('type') === 'checkbox') {
+      const task = e.target.closest('.task');
+      const index = task.getAttribute('data-index');
+      if (e.target.checked) {
+        task.classList.add('task-complete');
+        todoArray[index].complete = true;
+      } else {
+        task.classList.remove('task-complete');
+        todoArray[index].complete = false;
+      }
+    }
+  });
+
   document.querySelector('.btn-new-task').addEventListener('click', () => {
     modal.style.display = 'block';
 
@@ -15,7 +52,7 @@ function setupEventListeners() {
     submitTaskBtn.innerHTML = '+ Add Task';
     submitTaskBtn.classList.remove('submit-edit-task');
     const datePicker = document.querySelector('#due-date');
-    datePicker.setAttribute('min', today);
+    datePicker.setAttribute('min', todaysDate);
     resetForm();
   });
 
@@ -36,7 +73,7 @@ function setupEventListeners() {
   submitTaskBtn.addEventListener('click', e => {
     if (e.target.classList.contains('submit-edit-task')) {
       submitTodoEdit(e);
-      displayTasks(todoArray);
+      checkSelected(todoArray)
     } else if (e.target.classList.contains('submit-proj-btn')) {
       const index = submitTaskBtn.getAttribute('data-index');
       addToArray(projectArray[index].todoArray);
@@ -46,30 +83,21 @@ function setupEventListeners() {
     } else {
       modal.style.display = 'none';
       addToArray();
-      displayTasks(todoArray);
+      checkSelected(todoArray)
       resetForm();
     }
   });
   
-  document.addEventListener('click', e => {
-    if (e.target.classList.contains('del-task')) {
-      delFromArray(e);
-      checkSelected(e);
-    } else if (e.target.classList.contains('edit-task')) {
-      editForm(e);
-    }
-  });
   
-
   document.querySelectorAll('.menu-btn').forEach(item => {
     item.addEventListener('click', e => {
       if (e.target.classList.contains('all')) {
         displayTasks(todoArray);
       } else if (e.target.classList.contains('today')) {
-        const result = todoArray.filter(obj => obj.dueDate === today);
+        const result = todoArray.filter(obj => obj.dueDate === todaysDate);
         displayTasks(result);
       } else if (e.target.classList.contains('upcoming')) {
-        const result = todoArray.filter(obj => obj.dueDate !== today);
+        const result = todoArray.filter(obj => obj.dueDate !== todaysDate);
         displayTasks(result);
       }
       changeBackgroundColor(e.target);
@@ -77,20 +105,6 @@ function setupEventListeners() {
     });
   })
 
-  // checkbox event listener
-  document.addEventListener('change', e => {
-    if (e.target.getAttribute('type') === 'checkbox') {
-      const task = e.target.closest('.task');
-      const index = task.getAttribute('data-index');
-      if (e.target.checked) {
-        task.classList.add('task-complete');
-        todoArray[index].complete = true;
-      } else {
-        task.classList.remove('task-complete');
-        todoArray[index].complete = false;
-      }
-    }
-  });
 
   // projects event listeners
   document.querySelector('.btn-create-project').addEventListener('click', projectInputDisplay);
@@ -106,19 +120,6 @@ function setupEventListeners() {
     projectInputDisplay();
   });
 
-  document.addEventListener('click', e => {
-    if (e.target.classList.contains('del-project')) {
-      removeProject(e);
-      e.target.closest('.project').remove();
-      displayProjects(projectArray);
-    } else if (e.target.classList.contains('project-btn')) {
-      changeBackgroundColor(e.target.closest('.project'));
-      const index = e.target.closest('.project').getAttribute('data-index');
-      displayTasks(projectArray[index].todoArray);
-      submitTaskBtn.classList.add('submit-proj-btn');
-      submitTaskBtn.setAttribute('data-index', index); 
-    }
-  });
 }
 
 
@@ -130,35 +131,6 @@ function displayTasks(array) {
     taskContainer.appendChild(taskDiv);
   }  
 }
-
-// not sure why need a nested a loop, keeping just in case
-
-// function displayTasks(array) {
-//   const taskContainer = document.querySelector('.task-container');
-//   document.querySelectorAll('.task').forEach(element => element.remove());
-//   for (let i = 0; i < todoArray.length; i++) {
-//     for (let j = 0; j < array.length; j++) {
-//       if (array[j] === todoArray[i]) {
-//         const taskDiv = createDiv(array[j], i);
-//         taskContainer.appendChild(taskDiv);
-//       }
-//     }
-//   }  
-// }
-
-
-// function displayToday(array) {
-//   const date = new Date().toLocaleDateString();
-//   const result = array.filter(obj => obj.dueDate === date);
-//   displayTasks(result);
-// }
-
-
-// function displayUpcoming(array) {
-//   const date = new Date().toLocaleDateString();
-//   const result = array.filter(obj => obj.dueDate !== date);
-//   displayTasks(result);
-// }
 
 
 function createDiv(obj, index) {
@@ -182,6 +154,7 @@ function createDiv(obj, index) {
   return taskDiv;
 }
 
+
 function elementFromHtml(html) {
   const template = document.createElement('template');
   template.innerHTML = html.trim();
@@ -197,34 +170,38 @@ function changeBackgroundColor(element) {
 }
 
 
-function checkSelected(event) {
+function checkSelected() {
   const menuBtn = document.querySelectorAll('.menu-btn');
   const btnArr = [...menuBtn].filter(element => element.style.backgroundColor !== 'transparent');
+  const today = todoArray.filter(obj => obj.dueDate === todaysDate);
+  const upcoming = todoArray.filter(obj => obj.dueDate !== todaysDate);
   if (btnArr.length === 0) {
     displayTasks(todoArray);
   } else if (btnArr[0].classList.contains('today')) {
-    displayToday(todoArray);
+    displayTasks(today);
   } else if (btnArr[0].classList.contains('upcoming')) {
-    displayUpcoming(todoArray);
+    displayTasks(upcoming);
   } else if (btnArr[0].classList.contains('all')) {
     displayTasks(todoArray);
   }
 }
 
+
 function resetForm() {
   const inputs = document.querySelectorAll('.modal-input');
   inputs.forEach(element => element.value = '');
   document.querySelector('#priority').selectedIndex = 0;
-  const today = new Date().toLocaleDateString();
   const datePicker = document.querySelector('#due-date');
-  datePicker.value = today;
+  datePicker.value = todaysDate;
 }
+
 
 function projectInputDisplay() {
   const inputDisplay = document.querySelector('.create-proj-input');
   inputDisplay.style.display === 'none' ? inputDisplay.style.display = 'flex' : inputDisplay.style.display = 'none';
   inputDisplay.firstElementChild.value = '';
 }
+
 
 function displayProjects(array) {
   document.querySelectorAll('.project').forEach(project => project.remove());

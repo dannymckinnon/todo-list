@@ -45,8 +45,8 @@ function addToArray(projTodoArray) {
 }
 
 
-function delFromArray(event) {
-  const element = event.target;
+function delFromArray(e) {
+  const element = e.target;
   const index = element.closest('.task').getAttribute('data-index');
   todoArray.splice(index, 1);
 }
