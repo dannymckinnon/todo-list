@@ -6,13 +6,13 @@ const todoArray = [];
 const projectArray = [];
 
 const todoFactory = (title, dueDate, priority, description) => {
-  let complete = false; 
-  const priorityToColor = () => {
-    if (priority === 'low') {
+  let complete = false;
+  const priorityToColor = (abc) => {
+    if (abc === 'low') {
       return '#069C56';
-    } else if (priority === 'medium') {
+    } else if (abc === 'medium') {
       return '#FF980E';
-    } else if (priority === 'high') {
+    } else if (abc === 'high') {
       return '#D3212C';
     }
   };
@@ -79,19 +79,18 @@ function editForm(event) {
 }
 
 
-function submitTodoEdit(event) {
-  const index = event.target.getAttribute('data-index');
+function submitTodoEdit(e) {
+  const index = e.target.getAttribute('data-index');
   const title = document.querySelector('#title');
   const priority = document.querySelector('#priority');
   const dueDate = document.querySelector('#due-date');
   const description = document.querySelector('#description');
-
   todoArray[index].title = title.value;
   todoArray[index].priority = priority.value;
   todoArray[index].dueDate = dueDate.value;
   todoArray[index].description = description.value;
 
-  event.target.classList.remove('submit-edit-task');
+  e.target.classList.remove('submit-edit-task');
   document.querySelector('.task-modal').style.display = 'none';
 }
 
@@ -101,7 +100,8 @@ function addToProjectArray(title) {
   projectArray.push(projectFactory(title));
 }
 
-function removeProject(event) {
-  const index = event.target.getAttribute('data-index');
+function removeProject(e) {
+  const index = e.target.getAttribute('data-index');
   projectArray.splice(index, 1);
 }
+

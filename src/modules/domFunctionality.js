@@ -34,24 +34,24 @@ function setupEventListeners() {
       resetForm();
   });
 
-  submitTaskBtn.addEventListener('click', event => {
-    if (event.target.classList.contains('submit-edit-task')) {
-      submitTodoEdit(event);
+  submitTaskBtn.addEventListener('click', e => {
+    if (e.target.classList.contains('submit-edit-task')) {
+      submitTodoEdit(e);
       displayTasks(todoArray);
     } else {
       modal.style.display = 'none';
-      addToArray(event);
+      addToArray(e);
       displayTasks(todoArray);
       resetForm();
     }
   });
   
-  document.addEventListener('click', event => {
-    if (event.target.classList.contains('del-task')) {
-      delFromArray(event);
-      checkSelected(event);
-    } else if (event.target.classList.contains('edit-task')) {
-      editForm(event);
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('del-task')) {
+      delFromArray(e);
+      checkSelected(e);
+    } else if (e.target.classList.contains('edit-task')) {
+      editForm(e);
     }
   });
   
@@ -71,11 +71,11 @@ function setupEventListeners() {
   })
 
   // checkbox event listener
-  document.addEventListener('change', event => {
-    if (event.target.getAttribute('type') === 'checkbox') {
-      const task = event.target.closest('.task');
+  document.addEventListener('change', e => {
+    if (e.target.getAttribute('type') === 'checkbox') {
+      const task = e.target.closest('.task');
       const index = task.getAttribute('data-index');
-      if (event.target.checked) {
+      if (e.target.checked) {
         task.classList.add('task-complete');
         todoArray[index].complete = true;
       } else {
@@ -147,8 +147,9 @@ function displayUpcoming(array) {
 function createDiv(obj, index) {
   const complete = obj.complete ? 'checked' : 'unchecked';
   const checkboxClass = obj.complete ? 'task-complete' : '';
+  console.log(obj.priorityToColor(obj.priority));
   const taskDiv = elementFromHtml(`
-    <div class="task ${checkboxClass}" data-index="${index}" style="border-left: 4px solid ${obj.priorityToColor()}">
+    <div class="task ${checkboxClass}" data-index="${index}" style="border-left: 4px solid ${obj.priorityToColor(obj.priority)}">
       <div class="title">
         <input id="status${index}" type="checkbox" ${complete}>
         <label for="status${index}">${obj.title}</label>
