@@ -2,6 +2,7 @@ import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoE
 export { setupEventListeners, displayTasks };
 
 
+
 const todaysDate = new Date().toLocaleDateString();
 
 function setupEventListeners() {
@@ -35,19 +36,25 @@ function setupEventListeners() {
     if (e.target.getAttribute('type') === 'checkbox') {
       const task = e.target.closest('.task');
       const index = task.getAttribute('data-index');
+
       if (e.target.checked) {
         task.classList.add('task-complete');
         todoArray[index].complete = true;
+
       } else {
         task.classList.remove('task-complete');
         todoArray[index].complete = false;
       }
     }
   });
+  
+  modal.addEventListener('click', () => {
+      modal.style.display = 'none';
+      resetForm();
+  });
 
   document.querySelector('.btn-new-task').addEventListener('click', () => {
     modal.style.display = 'block';
-
     document.querySelector('.form-title').innerHTML = 'New Task';
     submitTaskBtn.innerHTML = '+ Add Task';
     submitTaskBtn.classList.remove('submit-edit-task');
@@ -65,21 +72,19 @@ function setupEventListeners() {
     event.stopPropagation();
   });
 
-  modal.addEventListener('click', () => {
-      modal.style.display = 'none';
-      resetForm();
-  });
 
   submitTaskBtn.addEventListener('click', e => {
     if (e.target.classList.contains('submit-edit-task')) {
       submitTodoEdit(e);
       checkSelected(todoArray)
+
     } else if (e.target.classList.contains('submit-proj-btn')) {
       const index = submitTaskBtn.getAttribute('data-index');
       addToArray(projectArray[index].todoArray);
       displayTasks(projectArray[index].todoArray);
       resetForm();
       modal.style.display = 'none';
+
     } else {
       modal.style.display = 'none';
       addToArray();
@@ -93,9 +98,11 @@ function setupEventListeners() {
     item.addEventListener('click', e => {
       if (e.target.classList.contains('all')) {
         displayTasks(todoArray);
+
       } else if (e.target.classList.contains('today')) {
         const result = todoArray.filter(obj => obj.dueDate === todaysDate);
         displayTasks(result);
+
       } else if (e.target.classList.contains('upcoming')) {
         const result = todoArray.filter(obj => obj.dueDate !== todaysDate);
         displayTasks(result);
@@ -119,16 +126,19 @@ function setupEventListeners() {
     displayProjects(projectArray);
     projectInputDisplay();
   });
-
 }
 
-
+// needs to pass the proper index to createDiv
 function displayTasks(array) {
   const taskContainer = document.querySelector('.task-container');
   document.querySelectorAll('.task').forEach(element => element.remove());
   for (let i = 0; i < array.length; i++) {
-    const taskDiv = createDiv(array[i], i);
-    taskContainer.appendChild(taskDiv);
+    for (let j = 0; j < todoArray.length; j++) {
+      if (array[i] === todoArray[j]) {
+        const taskDiv = createDiv(array[i], j);
+        taskContainer.appendChild(taskDiv);
+      }
+    }
   }  
 }
 
@@ -150,7 +160,6 @@ function createDiv(obj, index) {
       <p class="description">${obj.description}</p>
     </div>
   `);
-
   return taskDiv;
 }
 
@@ -158,7 +167,6 @@ function createDiv(obj, index) {
 function elementFromHtml(html) {
   const template = document.createElement('template');
   template.innerHTML = html.trim();
-
   return template.content.firstElementChild;
 }
 
@@ -177,10 +185,13 @@ function checkSelected() {
   const upcoming = todoArray.filter(obj => obj.dueDate !== todaysDate);
   if (btnArr.length === 0) {
     displayTasks(todoArray);
+
   } else if (btnArr[0].classList.contains('today')) {
     displayTasks(today);
+
   } else if (btnArr[0].classList.contains('upcoming')) {
     displayTasks(upcoming);
+
   } else if (btnArr[0].classList.contains('all')) {
     displayTasks(todoArray);
   }
@@ -212,7 +223,6 @@ function displayProjects(array) {
       <button type="button" class="del-project"><img class="del-project" src="../src/images/close.svg" alt="Delete"></button>
     </div>
     `);
-
     document.querySelector('.menu').appendChild(taskDiv);
   }
 }
