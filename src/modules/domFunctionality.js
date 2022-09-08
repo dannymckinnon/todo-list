@@ -18,16 +18,25 @@ function setupEventListeners() {
     } else if (e.target.classList.contains('project-btn')) {
       changeBackgroundColor(e.target.closest('.project'));
       const index = e.target.closest('.project').getAttribute('data-index');
-      displayTasks(projectArray[index].todoArray);
+      displayProjectTasks(projectArray[index].todoArray);
       submitTaskBtn.classList.add('submit-proj-btn');
       submitTaskBtn.setAttribute('data-index', index); 
 
     } else if (e.target.classList.contains('del-task')) {
-      delFromArray(e);
+      delFromArray(e, todoArray);
       checkSelected();
 
     } else if (e.target.classList.contains('edit-task')) {
       editForm(e);
+
+    // need to do this
+    } else if (e.target.classList.contains('proj-del-task')) {
+      const projIndex = document.querySelector('.submit-proj-btn').getAttribute('data-index');
+      delFromArray(e, projectArray[projIndex].todoArray);
+      displayTasks(projectArray[projIndex].todoArray); 
+    } else if (e.target.classList.contains('proj-edit-task')) {
+      const projIndex = document.querySelector('.submit-proj-btn').getAttribute('data-index');
+      editForm(e, projectArray[projIndex].todoArray);
     }
   });
 
@@ -75,13 +84,14 @@ function setupEventListeners() {
 
   submitTaskBtn.addEventListener('click', e => {
     if (e.target.classList.contains('submit-edit-task')) {
-      submitTodoEdit(e);
-      checkSelected(todoArray)
+      const index = submitTaskBtn.getAttribute('data-index');
+      submitTodoEdit(e, projectArray[index].todoArray);
+      displayProjectTasks(projectArray[index].todoArray);
 
     } else if (e.target.classList.contains('submit-proj-btn')) {
       const index = submitTaskBtn.getAttribute('data-index');
       addToArray(projectArray[index].todoArray);
-      displayTasks(projectArray[index].todoArray);
+      displayProjectTasks(projectArray[index].todoArray);
       resetForm();
       modal.style.display = 'none';
 
@@ -128,14 +138,13 @@ function setupEventListeners() {
   });
 }
 
-// needs to pass the proper index to createDiv
 function displayTasks(array) {
   const taskContainer = document.querySelector('.task-container');
   document.querySelectorAll('.task').forEach(element => element.remove());
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < todoArray.length; j++) {
       if (array[i] === todoArray[j]) {
-        const taskDiv = createDiv(array[i], j);
+        const taskDiv = createDiv(array[i], j, false);
         taskContainer.appendChild(taskDiv);
       }
     }
@@ -143,7 +152,9 @@ function displayTasks(array) {
 }
 
 
-function createDiv(obj, index) {
+function createDiv(obj, index, boolean) {
+  const del =  boolean ? 'proj-del-task' : 'del-task';
+  const edit = boolean ? 'proj-edit-task' : 'edit-task';
   const complete = obj.complete ? 'checked' : 'unchecked';
   const checkboxClass = obj.complete ? 'task-complete' : '';
   const taskDiv = elementFromHtml(`
@@ -154,8 +165,8 @@ function createDiv(obj, index) {
       </div>
       <div class="date">${obj.dueDate}</div>
       <div class="del-edit-task">
-        <button class="edit-task" type="button"><img class="edit-task" src="../src/images/edit.svg" alt="Edit"></button>
-        <button class="del-task" type="button"><img class="del-task" src="../src/images/close.svg" alt="Delete"></button>
+        <button type="button"><img class="${edit}" src="../src/images/edit.svg" alt="Edit"></button>
+        <button type="button"><img class="${del}" src="../src/images/close.svg" alt="Delete"></button>
       </div>
       <p class="description">${obj.description}</p>
     </div>
@@ -225,4 +236,13 @@ function displayProjects(array) {
     `);
     document.querySelector('.menu').appendChild(taskDiv);
   }
+}
+
+function displayProjectTasks(array) {
+  const taskContainer = document.querySelector('.task-container');
+  document.querySelectorAll('.task').forEach(element => element.remove());
+  for (let i = 0; i < array.length; i++) {
+    const taskDiv = createDiv(array[i], i, true);
+    taskContainer.appendChild(taskDiv);
+  }  
 }

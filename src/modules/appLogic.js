@@ -45,17 +45,17 @@ function addToArray(projTodoArray) {
 }
 
 
-function delFromArray(e) {
+function delFromArray(e, array) {
   const element = e.target;
   const index = element.closest('.task').getAttribute('data-index');
-  todoArray.splice(index, 1);
+  array.splice(index, 1);
 }
 
 
-function editForm(event) {
+function editForm(e, array) {
   const modal = document.querySelector('.task-modal');
-  const index = event.target.closest('.task').getAttribute('data-index');
-  const todoObj = todoArray[index];
+  const index = e.target.closest('.task').getAttribute('data-index');
+  const todoObj = array[index];
 
   modal.style.display = 'block';
   const title = document.querySelector('#title');
@@ -79,21 +79,20 @@ function editForm(event) {
   submitBtn.innerHTML = '+ Edit task'
   submitBtn.classList.add('submit-edit-task');
   submitBtn.setAttribute('data-index', index);
-
   document.querySelector('.form-title').innerHTML = 'Edit Task';
 }
 
 
-function submitTodoEdit(e) {
+function submitTodoEdit(e, array) {
   const index = e.target.getAttribute('data-index');
   const title = document.querySelector('#title');
   const priority = document.querySelector('#priority');
   const dueDate = document.querySelector('#due-date');
   const description = document.querySelector('#description');
-  todoArray[index].title = title.value;
-  todoArray[index].priority = priority.value;
-  todoArray[index].dueDate = dueDate.value;
-  todoArray[index].description = description.value;
+  array[index].title = title.value;
+  array[index].priority = priority.value;
+  array[index].dueDate = dueDate.value;
+  array[index].description = description.value;
 
   e.target.classList.remove('submit-edit-task');
   document.querySelector('.task-modal').style.display = 'none';
