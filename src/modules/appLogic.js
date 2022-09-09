@@ -52,11 +52,10 @@ function delFromArray(e, array) {
 }
 
 
-function editForm(e, array) {
+function editForm(e, array, projIndex) {
   const modal = document.querySelector('.task-modal');
   const index = e.target.closest('.task').getAttribute('data-index');
   const todoObj = array[index];
-
   modal.style.display = 'block';
   const title = document.querySelector('#title');
   const priority = document.querySelector('#priority');
@@ -79,6 +78,7 @@ function editForm(e, array) {
   submitBtn.innerHTML = '+ Edit task'
   submitBtn.classList.add('submit-edit-task');
   submitBtn.setAttribute('data-index', index);
+  submitBtn.setAttribute('data-proj-index', projIndex);
   document.querySelector('.form-title').innerHTML = 'Edit Task';
 }
 
@@ -105,7 +105,7 @@ function addToProjectArray(title) {
 }
 
 function removeProject(e) {
-  const index = e.target.getAttribute('data-index');
+  const index = e.target.closest('.project').getAttribute('data-index');
   projectArray.splice(index, 1);
 }
 

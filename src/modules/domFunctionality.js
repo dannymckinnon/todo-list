@@ -27,16 +27,16 @@ function setupEventListeners() {
       checkSelected();
 
     } else if (e.target.classList.contains('edit-task')) {
-      editForm(e);
+      editForm(e, todoArray);
 
-    // need to do this
     } else if (e.target.classList.contains('proj-del-task')) {
-      const projIndex = document.querySelector('.submit-proj-btn').getAttribute('data-index');
+      const projIndex = document.querySelector('.submit-task-btn').getAttribute('data-index');
       delFromArray(e, projectArray[projIndex].todoArray);
-      displayTasks(projectArray[projIndex].todoArray); 
+      displayProjectTasks(projectArray[projIndex].todoArray); 
+
     } else if (e.target.classList.contains('proj-edit-task')) {
       const projIndex = document.querySelector('.submit-proj-btn').getAttribute('data-index');
-      editForm(e, projectArray[projIndex].todoArray);
+      editForm(e, projectArray[projIndex].todoArray, projIndex);
     }
   });
 
@@ -83,13 +83,18 @@ function setupEventListeners() {
 
 
   submitTaskBtn.addEventListener('click', e => {
-    if (e.target.classList.contains('submit-edit-task')) {
-      const index = submitTaskBtn.getAttribute('data-index');
+    const index = submitTaskBtn.getAttribute('data-index');
+    const projIndex = submitTaskBtn.getAttribute('data-proj-index');
+    const classList = e.target.classList;
+    if (classList.contains('submit-proj-btn') && classList.contains('submit-edit-task')) {
       submitTodoEdit(e, projectArray[index].todoArray);
       displayProjectTasks(projectArray[index].todoArray);
 
-    } else if (e.target.classList.contains('submit-proj-btn')) {
-      const index = submitTaskBtn.getAttribute('data-index');
+    } else if (classList.contains('submit-edit-task')) {
+      submitTodoEdit(e, todoArray);
+      checkSelected();
+    
+    } else if (classList.contains('submit-proj-btn')) {
       addToArray(projectArray[index].todoArray);
       displayProjectTasks(projectArray[index].todoArray);
       resetForm();
@@ -98,9 +103,34 @@ function setupEventListeners() {
     } else {
       modal.style.display = 'none';
       addToArray();
-      checkSelected(todoArray)
-      resetForm();
+      checkSelected();
+      resetForm();     
     }
+
+
+    // if (e.target.classList.contains('submit-edit-task')) {
+
+    //   if (e.target.classList.contains('.submit-proj-btn')) {
+    //     submitTodoEdit(e, projectArray[index].todoArray);
+    //     displayProjectTasks(projectArray[index].todoArray);
+
+    //   } else {
+    //     submitTodoEdit(e, todoArray);
+    //     displayTasks(todoArray);
+    //   }
+
+    // } else if (e.target.classList.contains('submit-proj-btn') && !(e.target.classList.contains('.submit-edit-task'))) {
+    //   addToArray(projectArray[index].todoArray);
+    //   displayProjectTasks(projectArray[index].todoArray);
+    //   resetForm();
+    //   modal.style.display = 'none';
+
+    // } else {
+    //   modal.style.display = 'none';
+    //   addToArray();
+    //   checkSelected(todoArray)
+    //   resetForm();
+    // }
   });
   
   
@@ -184,7 +214,7 @@ function elementFromHtml(html) {
 
 function changeBackgroundColor(element) {
   const menuBtn = document.querySelectorAll('.menu-btn');
-    menuBtn.forEach(element => element.style.backgroundColor = 'transparent');
+    menuBtn.forEach(btn => btn.style.backgroundColor = 'transparent');
     element.style.backgroundColor = 'rgb(231, 231, 231)';
 }
 
