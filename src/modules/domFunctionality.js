@@ -37,7 +37,9 @@ function setupEventListeners() {
       displayProjectTasks(projectArray[projIndex].todoArray); 
 
     } else if (e.target.classList.contains('proj-edit-task')) {
-      const projIndex = document.querySelector('.submit-proj-btn').getAttribute('data-index');
+      const projects = document.querySelectorAll('.project');
+      const project = [...projects].filter(element => element.style.backgroundColor === 'rgb(231, 231, 231)');
+      const projIndex = project[0].getAttribute('data-index');
       editForm(e, projectArray[projIndex].todoArray, projIndex);
     }
   });
