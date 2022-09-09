@@ -14,6 +14,7 @@ function setupEventListeners() {
       removeProject(e);
       e.target.closest('.project').remove();
       displayProjectTasks([]);
+      document.querySelectorAll('.menu-btn').forEach(element => element.style.backgroundColor = 'transparent');
       displayProjects(projectArray);
 
     } else if (e.target.classList.contains('project-btn')) {
@@ -43,10 +44,13 @@ function setupEventListeners() {
 
   // checkbox event listener
   document.addEventListener('change', e => {
-    if (e.target.getAttribute('type') === 'checkbox') {
-      const task = e.target.closest('.task');
+    const projects = document.querySelectorAll('.project');
+    const project = [...projects].filter(element => element.style.backgroundColor === 'rgb(231, 231, 231)');
+    const task = e.target.closest('.task');
+    
+    if (e.target.getAttribute('type') === 'checkbox' && project.length === 0) {
       const index = task.getAttribute('data-index');
-
+      
       if (e.target.checked) {
         task.classList.add('task-complete');
         todoArray[index].complete = true;
@@ -55,6 +59,19 @@ function setupEventListeners() {
         task.classList.remove('task-complete');
         todoArray[index].complete = false;
       }
+    } else if (e.target.getAttribute('type') === 'checkbox' && project.length !== 0) {
+      const index = task.getAttribute('data-index');
+      const projIndex = project[0].getAttribute('data-index');
+
+      if (e.target.checked) {
+        task.classList.add('task-complete');
+        projectArray[projIndex].todoArray[index].complete = true;
+
+      } else {
+        task.classList.remove('task-complete');
+        projectArray[projIndex].todoArray[index].complete = false;
+      }
+
     }
   });
   
