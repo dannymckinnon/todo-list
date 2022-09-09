@@ -87,8 +87,8 @@ function setupEventListeners() {
     const projIndex = submitTaskBtn.getAttribute('data-proj-index');
     const classList = e.target.classList;
     if (classList.contains('submit-proj-btn') && classList.contains('submit-edit-task')) {
-      submitTodoEdit(e, projectArray[index].todoArray);
-      displayProjectTasks(projectArray[index].todoArray);
+      submitTodoEdit(e, projectArray[projIndex].todoArray);
+      displayProjectTasks(projectArray[projIndex].todoArray);
 
     } else if (classList.contains('submit-edit-task')) {
       submitTodoEdit(e, todoArray);
