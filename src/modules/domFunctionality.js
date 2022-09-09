@@ -13,6 +13,7 @@ function setupEventListeners() {
     if (e.target.classList.contains('del-project')) {
       removeProject(e);
       e.target.closest('.project').remove();
+      displayProjectTasks([]);
       displayProjects(projectArray);
 
     } else if (e.target.classList.contains('project-btn')) {
