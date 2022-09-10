@@ -109,29 +109,23 @@ function addToProjectArray(title) {
   projectToLocalStorage();
 }
 
+
 function removeProject(e) {
   const index = e.target.closest('.project').getAttribute('data-index');
   projectArray.splice(index, 1);
+  projectToLocalStorage();
 }
 
 
 function todoToLocalStorage() {
-  localStorage.clear();
+  localStorage.removeItem('todoArrayLocal');
   localStorage.setItem('todoArrayLocal', JSON.stringify(todoArray));
-}
-
-
-function projectToLocalStorage() {
-  // localStorage.clear();
-  localStorage.setItem('projectArrayLocal', JSON.stringify(projectArray));
-  const retrievedObject = JSON.parse(localStorage.getItem('projArrayLocal'));
-  console.log(retrievedObject);
 }
 
 
 function localStorageToArray() {
   const retrievedObject = JSON.parse(localStorage.getItem('todoArrayLocal'));
-  if (retrievedObject.length > 0) {
+  if (localStorage.getItem('todoArrayLocal')) {
     retrievedObject.forEach(element => {
       element.priorityToColor = (abc) => {
         if (abc === 'low') {
@@ -145,4 +139,12 @@ function localStorageToArray() {
     });
   }
   todoArray = retrievedObject;
+}
+
+
+function projectToLocalStorage() {
+  localStorage.removeItem('projArrayLocal');
+  localStorage.setItem('projArrayLocal', JSON.stringify(projectArray));
+  const retrievedObject = JSON.parse(localStorage.getItem('projArrayLocal'));
+  console.log(retrievedObject);
 }
