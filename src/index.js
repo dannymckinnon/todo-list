@@ -7,3 +7,6 @@ setupEventListeners();
 document.querySelector('.all').style.backgroundColor = 'rgb(231, 231, 231)';
 displayTasks(todoArray);
 
+
+// localStorage.clear();
+console.log(localStorage);

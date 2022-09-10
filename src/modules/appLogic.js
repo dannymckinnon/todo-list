@@ -1,6 +1,6 @@
 import { displayTasks } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject };
+export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage };
 
 const todoArray = [];
 const projectArray = [];
@@ -37,11 +37,14 @@ function addToArray(projTodoArray) {
 
   const todo = todoFactory(title, dueDate, priority, description);
   
+  
   if (arguments.length === 0) {
     todoArray.push(todo);
   } else {
     projTodoArray.push(todo);
-  }  
+  }
+
+  todoToLocalStorage();
 }
 
 
@@ -96,6 +99,7 @@ function submitTodoEdit(e, array) {
 
   e.target.classList.remove('submit-edit-task');
   document.querySelector('.task-modal').style.display = 'none';
+  todoToLocalStorage();
 }
 
 
@@ -109,3 +113,26 @@ function removeProject(e) {
   projectArray.splice(index, 1);
 }
 
+
+function todoToLocalStorage() {
+  localStorage.clear();
+  localStorage.setItem('todoArrayLocal', JSON.stringify(todoArray));
+  const retrievedObject = JSON.parse(localStorage.getItem('todoArrayLocal'));
+  retrievedObject.forEach(element => {
+    element.priorityToColor = (abc) => {
+      if (abc === 'low') {
+        return '#069C56';
+      } else if (abc === 'medium') {
+        return '#FF980E';
+      } else if (abc === 'high') {
+        return '#D3212C';
+      }
+    };
+    console.log(element);
+  });
+}
+
+
+function localStorageToArray() {
+  
+}

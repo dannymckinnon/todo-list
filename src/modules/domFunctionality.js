@@ -1,4 +1,4 @@
-import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject } from "./appLogic";
+import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage } from "./appLogic";
 export { setupEventListeners, displayTasks };
 
 
@@ -27,6 +27,7 @@ function setupEventListeners() {
     } else if (e.target.classList.contains('del-task')) {
       delFromArray(e, todoArray);
       checkSelected();
+      todoToLocalStorage();
 
     } else if (e.target.classList.contains('edit-task')) {
       editForm(e, todoArray);
@@ -56,10 +57,12 @@ function setupEventListeners() {
       if (e.target.checked) {
         task.classList.add('task-complete');
         todoArray[index].complete = true;
+        todoToLocalStorage();
 
       } else {
         task.classList.remove('task-complete');
         todoArray[index].complete = false;
+        todoToLocalStorage();
       }
     } else if (e.target.getAttribute('type') === 'checkbox' && project.length !== 0) {
       const index = task.getAttribute('data-index');
@@ -126,31 +129,6 @@ function setupEventListeners() {
       checkSelected();
       resetForm();     
     }
-
-
-    // if (e.target.classList.contains('submit-edit-task')) {
-
-    //   if (e.target.classList.contains('.submit-proj-btn')) {
-    //     submitTodoEdit(e, projectArray[index].todoArray);
-    //     displayProjectTasks(projectArray[index].todoArray);
-
-    //   } else {
-    //     submitTodoEdit(e, todoArray);
-    //     displayTasks(todoArray);
-    //   }
-
-    // } else if (e.target.classList.contains('submit-proj-btn') && !(e.target.classList.contains('.submit-edit-task'))) {
-    //   addToArray(projectArray[index].todoArray);
-    //   displayProjectTasks(projectArray[index].todoArray);
-    //   resetForm();
-    //   modal.style.display = 'none';
-
-    // } else {
-    //   modal.style.display = 'none';
-    //   addToArray();
-    //   checkSelected(todoArray)
-    //   resetForm();
-    // }
   });
   
   
