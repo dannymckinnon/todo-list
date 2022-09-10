@@ -1,6 +1,6 @@
 import { displayTasks } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage, localStorageToArray };
+export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage, localStorageToArray, projectToLocalStorage };
 
 let todoArray = [];
 const projectArray = [];
@@ -106,6 +106,7 @@ function submitTodoEdit(e, array) {
 // Project functions
 function addToProjectArray(title) {
   projectArray.push(projectFactory(title));
+  projectToLocalStorage();
 }
 
 function removeProject(e) {
@@ -120,18 +121,28 @@ function todoToLocalStorage() {
 }
 
 
+function projectToLocalStorage() {
+  // localStorage.clear();
+  localStorage.setItem('projectArrayLocal', JSON.stringify(projectArray));
+  const retrievedObject = JSON.parse(localStorage.getItem('projArrayLocal'));
+  console.log(retrievedObject);
+}
+
+
 function localStorageToArray() {
   const retrievedObject = JSON.parse(localStorage.getItem('todoArrayLocal'));
-  retrievedObject.forEach(element => {
-    element.priorityToColor = (abc) => {
-      if (abc === 'low') {
-        return '#069C56';
-      } else if (abc === 'medium') {
-        return '#FF980E';
-      } else if (abc === 'high') {
-        return '#D3212C';
-      }
-    };
-  });
+  if (retrievedObject.length > 0) {
+    retrievedObject.forEach(element => {
+      element.priorityToColor = (abc) => {
+        if (abc === 'low') {
+          return '#069C56';
+        } else if (abc === 'medium') {
+          return '#FF980E';
+        } else if (abc === 'high') {
+          return '#D3212C';
+        }
+      };
+    });
+  }
   todoArray = retrievedObject;
 }

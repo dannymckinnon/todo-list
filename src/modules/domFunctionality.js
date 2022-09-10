@@ -1,4 +1,4 @@
-import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage } from "./appLogic";
+import { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage, projectToLocalStorage } from "./appLogic";
 export { setupEventListeners, displayTasks };
 
 
