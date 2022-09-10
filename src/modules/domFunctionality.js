@@ -36,6 +36,7 @@ function setupEventListeners() {
       const projIndex = document.querySelector('.submit-task-btn').getAttribute('data-index');
       delFromArray(e, projectArray[projIndex].todoArray);
       displayProjectTasks(projectArray[projIndex].todoArray); 
+      projectToLocalStorage();
 
     } else if (e.target.classList.contains('proj-edit-task')) {
       const projects = document.querySelectorAll('.project');
@@ -58,7 +59,7 @@ function setupEventListeners() {
         task.classList.add('task-complete');
         todoArray[index].complete = true;
         todoToLocalStorage();
-
+        
       } else {
         task.classList.remove('task-complete');
         todoArray[index].complete = false;
@@ -71,10 +72,12 @@ function setupEventListeners() {
       if (e.target.checked) {
         task.classList.add('task-complete');
         projectArray[projIndex].todoArray[index].complete = true;
+        projectToLocalStorage();
 
       } else {
         task.classList.remove('task-complete');
         projectArray[projIndex].todoArray[index].complete = false;
+        projectToLocalStorage();
       }
 
     }

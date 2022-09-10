@@ -45,6 +45,7 @@ function addToArray(projTodoArray) {
   }
 
   todoToLocalStorage();
+  projectToLocalStorage()
 }
 
 
@@ -100,6 +101,7 @@ function submitTodoEdit(e, array) {
   e.target.classList.remove('submit-edit-task');
   document.querySelector('.task-modal').style.display = 'none';
   todoToLocalStorage();
+  projectToLocalStorage()
 }
 
 
@@ -150,5 +152,22 @@ function projectToLocalStorage() {
 
 function projectLocalToArray() {
   const retrievedObject = JSON.parse(localStorage.getItem('projArrayLocal'));
+  if (localStorage.getItem('projArrayLocal')) {
+    retrievedObject.forEach(proj => {
+      if (proj.todoArray.length !== 0) {
+        proj.todoArray.forEach(todo => {
+          todo.priorityToColor = (abc) => {
+            if (abc === 'low') {
+              return '#069C56';
+            } else if (abc === 'medium') {
+              return '#FF980E';
+            } else if (abc === 'high') {
+              return '#D3212C';
+            }
+          }
+        })
+      }
+    })
+  }
   projectArray = retrievedObject;
 }
