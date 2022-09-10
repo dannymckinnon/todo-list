@@ -1,9 +1,9 @@
 import { displayTasks } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage, localStorageToArray, projectToLocalStorage };
+export { todoFactory, todoArray, projectArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, removeProject, todoToLocalStorage, localStorageToArray, projectToLocalStorage, projectLocalToArray };
 
 let todoArray = [];
-const projectArray = [];
+let projectArray = [];
 
 const todoFactory = (title, dueDate, priority, description) => {
   let complete = false;
@@ -145,6 +145,10 @@ function localStorageToArray() {
 function projectToLocalStorage() {
   localStorage.removeItem('projArrayLocal');
   localStorage.setItem('projArrayLocal', JSON.stringify(projectArray));
+}
+
+
+function projectLocalToArray() {
   const retrievedObject = JSON.parse(localStorage.getItem('projArrayLocal'));
-  console.log(retrievedObject);
+  projectArray = retrievedObject;
 }
