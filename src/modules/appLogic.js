@@ -1,8 +1,8 @@
 import { displayTasks } from "./domFunctionality";
 
-export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage };
+export { todoFactory, todoArray, addToArray, delFromArray, editForm, submitTodoEdit, projectFactory, addToProjectArray, projectArray, removeProject, todoToLocalStorage, localStorageToArray };
 
-const todoArray = [];
+let todoArray = [];
 const projectArray = [];
 
 const todoFactory = (title, dueDate, priority, description) => {
@@ -117,6 +117,10 @@ function removeProject(e) {
 function todoToLocalStorage() {
   localStorage.clear();
   localStorage.setItem('todoArrayLocal', JSON.stringify(todoArray));
+}
+
+
+function localStorageToArray() {
   const retrievedObject = JSON.parse(localStorage.getItem('todoArrayLocal'));
   retrievedObject.forEach(element => {
     element.priorityToColor = (abc) => {
@@ -128,11 +132,6 @@ function todoToLocalStorage() {
         return '#D3212C';
       }
     };
-    console.log(element);
   });
-}
-
-
-function localStorageToArray() {
-  
+  todoArray = retrievedObject;
 }
